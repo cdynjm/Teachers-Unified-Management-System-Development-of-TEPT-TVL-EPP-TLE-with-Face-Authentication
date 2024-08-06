@@ -66,8 +66,19 @@ interface SchoolInterface
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function updateSchoolAccount($request);
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function getSubjectProMeds($request);
+    public function getProMeds($request);
+    public function createProMeds($request);
+    public function updateProMeds($request);
+    public function deleteProMeds($request);
 
-
+    public function downloadProMeds($request);
+    public function seniorHigh($request);
 }
 
 ?>

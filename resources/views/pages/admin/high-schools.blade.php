@@ -69,7 +69,7 @@
                                     @break
                                     @endforeach
                                 @endif
-                                MPS</h5>
+                                PRO MEDS</h5>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                                         style="width:20px;height:20px;">
                                     </lord-icon>
                                 </span>
-                                Senior High School MPS</h5>
+                                Senior High School PRO MEDS</h5>
                         </div>
                     </div>
                 </div>

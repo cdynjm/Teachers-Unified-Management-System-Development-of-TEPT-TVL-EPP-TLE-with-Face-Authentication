@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Information\HighSchools;
 use App\Models\Information\TLETVESubjects;
+use App\Models\Information\HighSchoolSubjects;
 
 class HighSchoolSubjectsData extends Model
 {
@@ -30,7 +31,9 @@ class HighSchoolSubjectsData extends Model
     public function HighSchools() {
         return $this->hasOne(HighSchools::class, 'id', 'schoolID');
     }
-
+    public function HighSchoolSubjects() {
+        return $this->hasOne(HighSchoolSubjects::class, 'id', 'subjectID');
+    }
     public function TLETVESubjects() {
         return $this->hasOne(TLETVESubjects::class, 'id', 'subjectID');
     }

@@ -22,7 +22,7 @@
                                 style="width:40px;height:40px;">
                             </lord-icon>
                         </span>
-                        Open School MPS</button>
+                        School PROMEDS</button>
                 </form>
 
                 <form action="" id="search-high-school-teachers">

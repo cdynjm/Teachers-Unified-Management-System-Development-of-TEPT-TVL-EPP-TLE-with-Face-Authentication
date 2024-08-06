@@ -69,7 +69,7 @@
                                     @break
                                     @endforeach
                                 @endif
-                                MPS</h5>
+                                PRO MEDS</h5>
                         </div>
                     </div>
                 </div>

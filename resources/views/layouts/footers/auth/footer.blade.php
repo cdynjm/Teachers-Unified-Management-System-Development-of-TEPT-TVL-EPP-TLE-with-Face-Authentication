@@ -16,10 +16,10 @@
           <div class="col-lg-3 col-sm-6 m-3">
             <span class="text-sm fw-bolder">Online portals</span>
             <div class="social-icon my-3">
-              <a href="https://www.facebook.com/southernleytestateu" target="_blank" class="bg-gradient-info text-white p-2 border-radius-sm me-2"><i class="fa fa-facebook-square"></i></a>
-              <a href="https://youtube.com/c/SouthernLeyteStateUniversity" target="_blank" class="bg-gradient-danger text-white p-2 border-radius-sm me-2"><i class="fa fa-youtube-play"></i></a>
-              <a href="https://www.southernleytestateu.edu.ph/index.php/en/" target="_blank" class="bg-gradient-success text-white p-2 border-radius-sm me-2"><i class="	fa fa-globe"></i></a>
-              <a href="https://gmail.com" target="_blank" class="bg-gradient-warning text-white p-2 border-radius-sm me-2"><i class="fa fa-google"></i></a>
+              <a href="https://www.facebook.com/southernleytestateu" target="_blank" class="bg-gradient-info text-white p-2 border-radius-sm me-2"><i class="fa-brands fa-facebook"></i></a>
+              <a href="https://youtube.com/c/SouthernLeyteStateUniversity" target="_blank" class="bg-gradient-danger text-white p-2 border-radius-sm me-2"><i class="fa-brands fa-youtube"></i></a>
+              <a href="https://www.southernleytestateu.edu.ph/index.php/en/" target="_blank" class="bg-gradient-success text-white p-2 border-radius-sm me-2"><i class="fa fa-globe"></i></a>
+              <a href="https://gmail.com" target="_blank" class="bg-gradient-warning text-white p-2 border-radius-sm me-2"><i class="fa-solid fa-envelope"></i></a>
             </div>
             <p class="pt-1 text-sm">
                 Development of TEPT(TVL/EPP/TLE)

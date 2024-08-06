@@ -707,4 +707,14 @@ class AdminController extends Controller
         $status = $this->AdminInterface->createFaceAuth($request);
         return response()->json([], $status);        
      }
+     /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function proMeds(Request $request) {
+        $subject = $this->AdminInterface->getSubjectProMeds($request);
+        $promeds = $this->AdminInterface->getProMeds($request);
+        return view('pages.admin.pro-meds', ['subject' => $subject, 'promeds' => $promeds, 'type' => $request->type, 'schoolType' => $request->schoolType]);
+      }
 }

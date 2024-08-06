@@ -22,7 +22,7 @@
                                 style="width:40px;height:40px;">
                             </lord-icon>
                         </span>
-                        School MPS</button>
+                        School PROMEDS</button>
                 </form>
 
                 <form action="" id="search-elementary-school-teachers">

@@ -162,6 +162,9 @@ interface AdminInterface
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function createFaceAuth($request);
+
+    public function getSubjectProMeds($request);
+    public function getProMeds($request);
 }
 
 ?>

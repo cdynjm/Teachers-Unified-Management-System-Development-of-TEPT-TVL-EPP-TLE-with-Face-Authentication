@@ -64,7 +64,7 @@
                                                     
                                                     @foreach ($schoolData as $sd)
                                                         @if($sub->id == $sd->subjectID)
-                                                            checked
+                                                            checked disabled
                                                         @endif
                                                     @endforeach
 
@@ -81,7 +81,7 @@
                                                     
                                                     @foreach ($seniorHighSchoolData as $sd)
                                                         @if($sub->id == $sd->subjectID)
-                                                            checked
+                                                            checked disabled
                                                         @endif
                                                     @endforeach
 

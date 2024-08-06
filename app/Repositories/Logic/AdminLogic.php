@@ -34,6 +34,7 @@ use App\Models\Data\ElementarySubjectsData;
 use App\Models\Data\HighSchoolSubjectsData;
 use App\Models\Data\SeniorHighSchoolSubjectsData;
 use App\Models\Data\Attachments;
+use App\Models\Data\ProMeds;
 use App\Models\SchoolYear;
 
 class AdminLogic implements AdminInterface {
@@ -348,7 +349,7 @@ class AdminLogic implements AdminInterface {
                 'role' => 2
             ]);
 
-            for($loop = 4; $loop <= 6; $loop++) {
+            for($loop = 1; $loop <= 6; $loop++) {
                 foreach(ElementarySubjects::get() as $elemSubjects) {
                     ElementarySubjectsData::create([
                         'schoolID' => $school->id,
@@ -389,6 +390,15 @@ class AdminLogic implements AdminInterface {
 
             for($loop = 7; $loop <= 10; $loop++) {
                 
+                foreach(HighSchoolSubjects::get() as $hsSubjects) {
+                    HighSchoolSubjectsData::create([
+                        'schoolID' => $school->id,
+                        'yearLevel' => $loop,
+                        'subjectID' => $hsSubjects->id,
+                        'year' => $schoolYear->fromYear."-".$schoolYear->toYear
+                    ]);
+                }
+
                 foreach($request->tvl_tve as $key => $value) {
                     HighSchoolSubjectsData::create([
                         'schoolID' => $school->id,
@@ -402,6 +412,15 @@ class AdminLogic implements AdminInterface {
 
             if($request->shsAvailable == 1) {
                 for($loop = 11; $loop <= 12; $loop++) {
+
+                    foreach(SeniorHighSchoolSubjects::get() as $shsSubjects) {
+                        SeniorHighSchoolSubjectsData::create([
+                            'schoolID' => $school->id,
+                            'yearLevel' => $loop,
+                            'subjectID' => $shsSubjects->id,
+                            'year' => $schoolYear->fromYear."-".$schoolYear->toYear
+                        ]);
+                    }
 
                     foreach($request->strands as $key => $value) {
                         SeniorHighSchoolSubjectsData::create([
@@ -444,6 +463,15 @@ class AdminLogic implements AdminInterface {
             ]);
 
             for($loop = 11; $loop <= 12; $loop++) {
+
+                foreach(SeniorHighSchoolSubjects::get() as $shsSubjects) {
+                    SeniorHighSchoolSubjectsData::create([
+                        'schoolID' => $school->id,
+                        'yearLevel' => $loop,
+                        'subjectID' => $shsSubjects->id,
+                        'year' => $schoolYear->fromYear."-".$schoolYear->toYear
+                    ]);
+                }
 
                 foreach($request->shs_strands as $key => $value) {
                     SeniorHighSchoolSubjectsData::create([
@@ -490,6 +518,7 @@ class AdminLogic implements AdminInterface {
         }
         if($school == 2) {
             return HighSchoolSubjectsData::where('schoolID', $id)
+                        ->where('tve_tle', 1)
                         ->where('year', $year->fromYear.'-'.$year->toYear)
                         ->distinct('subjectID')
                         ->get();
@@ -506,6 +535,7 @@ class AdminLogic implements AdminInterface {
         $year = $this->getLatestSchoolYear();
 
         return SeniorHighSchoolSubjectsData::where('schoolID', $id)
+                    ->where('strand', 1)
                     ->where('year', $year->fromYear."-".$year->toYear)
                     ->distinct('subjectID')
                     ->get();
@@ -569,99 +599,38 @@ class AdminLogic implements AdminInterface {
                 ]);
             }
 
-            for($loop = 7; $loop <= 10; $loop++) {
+            if(!empty($request->tvl_tve)) {
+                for($loop = 7; $loop <= 10; $loop++) {
 
-                foreach($request->tvl_tve as $key => $value) {
-
-                    $prev = HighSchoolSubjectsData::where('schoolID', $id)
-                                ->where('subjectID', $this->aes->decrypt($value))
-                                ->where('yearLevel', $loop)
-                                ->where('year', $year->fromYear.'-'.$year->toYear)
-                                ->first();
-                    if($prev) {
-                        HighSchoolSubjectsData::create([
-                            'schoolID' => $id,
-                            'yearLevel' => $loop,
-                            'subjectID' => $prev->subjectID,
-                            'tve_tle' => false,
-                            'year' => $year->fromYear."-".$year->toYear,
-                            'first' => $prev->first,
-                            'second' => $prev->second,
-                            'third' => $prev->third,
-                            'fourth' => $prev->fourth,
-                            'mps' => $prev->mps,
-                            'students' => $prev->students
-                        ]);
-                        HighSchoolSubjectsData::where('id', $prev->id)->delete();
-                    }
-                    else {
+                    foreach($request->tvl_tve as $key => $value) {
 
                         HighSchoolSubjectsData::create([
                             'schoolID' => $id,
                             'yearLevel' => $loop,
                             'subjectID' => $this->aes->decrypt($value),
-                            'tve_tle' => false,
+                            'tve_tle' => true,
                             'year' => $year->fromYear."-".$year->toYear
                         ]);
+                        
                     }
                 }
             }
-
-            HighSchoolSubjectsData::where('schoolID', $id)
-                    ->where('tve_tle', 1)
-                    ->where('year', $year->fromYear.'-'.$year->toYear)
-                    ->delete();
-            HighSchoolSubjectsData::where('schoolID', $id)
-                    ->where('year', $year->fromYear.'-'.$year->toYear)
-                    ->update(['tve_tle' => true]);
             
-            
-            for($loop = 11; $loop <= 12; $loop++) {
+            if(!empty($request->strands)) {
+                for($loop = 11; $loop <= 12; $loop++) {
 
-                foreach($request->strands as $key => $value) {
-
-                    $prev = SeniorHighSchoolSubjectsData::where('schoolID', $id)
-                                ->where('subjectID', $this->aes->decrypt($value))
-                                ->where('yearLevel', $loop)
-                                ->where('year', $year->fromYear.'-'.$year->toYear)
-                                ->first();
-                    if($prev) {
-                        SeniorHighSchoolSubjectsData::create([
-                            'schoolID' => $id,
-                            'yearLevel' => $loop,
-                            'subjectID' => $prev->subjectID,
-                            'strand' => false,
-                            'year' => $year->fromYear."-".$year->toYear,
-                            'first' => $prev->first,
-                            'second' => $prev->second,
-                            'third' => $prev->third,
-                            'fourth' => $prev->fourth,
-                            'mps' => $prev->mps,
-                            'students' => $prev->students
-                        ]);
-                        SeniorHighSchoolSubjectsData::where('id', $prev->id)->delete();
-                    }
-                    else {
+                    foreach($request->strands as $key => $value) {
 
                         SeniorHighSchoolSubjectsData::create([
                             'schoolID' => $id,
                             'yearLevel' => $loop,
                             'subjectID' => $this->aes->decrypt($value),
-                            'strand' => false,
+                            'strand' => true,
                             'year' => $year->fromYear."-".$year->toYear
                         ]);
                     }
                 }
             }
-
-            SeniorHighSchoolSubjectsData::where('schoolID', $id)
-                    ->where('strand', 1)
-                    ->where('year', $year->fromYear.'-'.$year->toYear)
-                    ->delete();
-            SeniorHighSchoolSubjectsData::where('schoolID', $id)
-                    ->where('year', $year->fromYear.'-'.$year->toYear)
-                    ->update(['strand' => true]);
-
 
 
             return Response::HTTP_OK;            
@@ -759,6 +728,7 @@ class AdminLogic implements AdminInterface {
         $year = $this->getLatestSchoolYear();
 
         foreach(ElementarySubjectsData::where('year', $year->fromYear."-".$year->toYear)->get() as $elem) {
+            
             ElementarySubjectsData::create([
                 'schoolID' => $elem->schoolID,
                 'yearLevel' => $elem->yearLevel,
@@ -768,23 +738,43 @@ class AdminLogic implements AdminInterface {
         }
 
         foreach(HighSchoolSubjectsData::where('year', $year->fromYear."-".$year->toYear)->get() as $hs) {
-            HighSchoolSubjectsData::create([
-                'schoolID' => $hs->schoolID,
-                'yearLevel' => $hs->yearLevel,
-                'subjectID' => $hs->subjectID,
-                'tve_tle' => true,
-                'year' => $year->toYear."-".$year->toYear + 1
-            ]);
-        }
+            if($hs->tve_tle == 1) {
+                HighSchoolSubjectsData::create([
+                    'schoolID' => $hs->schoolID,
+                    'yearLevel' => $hs->yearLevel,
+                    'subjectID' => $hs->subjectID,
+                    'tve_tle' => true,
+                    'year' => $year->toYear."-".$year->toYear + 1
+                ]);
+            }
+            if($hs->tve_tle == null) {
+                HighSchoolSubjectsData::create([
+                    'schoolID' => $hs->schoolID,
+                    'yearLevel' => $hs->yearLevel,
+                    'subjectID' => $hs->subjectID,
+                    'year' => $year->toYear."-".$year->toYear + 1
+                ]);
+            }
+        }   
 
         foreach(SeniorHighSchoolSubjectsData::where('year', $year->fromYear."-".$year->toYear)->get() as $shs) {
-            SeniorHighSchoolSubjectsData::create([
-                'schoolID' => $shs->schoolID,
-                'yearLevel' => $shs->yearLevel,
-                'subjectID' => $shs->subjectID,
-                'strand' => true,
-                'year' => $year->toYear."-".$year->toYear + 1
-            ]);
+            if($hs->strand == 1) {
+                SeniorHighSchoolSubjectsData::create([
+                    'schoolID' => $shs->schoolID,
+                    'yearLevel' => $shs->yearLevel,
+                    'subjectID' => $shs->subjectID,
+                    'strand' => true,
+                    'year' => $year->toYear."-".$year->toYear + 1
+                ]);
+            }
+            if($hs->strand == null) {
+                SeniorHighSchoolSubjectsData::create([
+                    'schoolID' => $shs->schoolID,
+                    'yearLevel' => $shs->yearLevel,
+                    'subjectID' => $shs->subjectID,
+                    'year' => $year->toYear."-".$year->toYear + 1
+                ]);
+            }
         }
 
         SchoolYear::create([
@@ -1038,6 +1028,59 @@ class AdminLogic implements AdminInterface {
         $transferfile = $request->file('file')->storeAs('public/face-auth/', $customFileName);    
 
         return Response::HTTP_OK;
+        
+    }
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function getSubjectProMeds($request) {
+        $id = $this->aes->decrypt($request->id);
+
+        if($request->schoolType == 1)
+            return ElementarySubjectsData::where('id', $id)->first();
+        if($request->schoolType == 2) {
+            if($request->type == 1)
+                return HighSchoolSubjectsData::where('id', $id)->first();
+            if($request->type == 2)
+                return SeniorHighSchoolSubjectsData::where('id', $id)->first();
+        }
+        if($request->schoolType == 3)
+            return SeniorHighSchoolSubjectsData::where('id', $id)->first();
+
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function getProMeds($request) {
+        $id = $this->aes->decrypt($request->id);
+        
+        if($request->schoolType == 1)
+            return ProMeds::where('elemSubjectID', $id)->get();
+        if($request->schoolType == 2) {
+            if($request->type == 1) {
+                if($request->type2 == 0)
+                    return ProMeds::where('hsSubjectID', $id)->get();
+                if($request->type2 == 1)
+                    return ProMeds::where('tleID', $id)->get();
+            }
+            if($request->type == 2) {
+                if($request->type2 == 0)
+                    return ProMeds::where('shsSubjectID', $id)->get();
+                if($request->type2 == 1)
+                    return ProMeds::where('strandID', $id)->get();
+            }
+        }
+        if($request->schoolType == 3) {
+            if($request->type2 == 0)
+                return ProMeds::where('shsSubjectID', $id)->get();
+            if($request->type2 == 1)
+                return ProMeds::where('strandID', $id)->get();
+        }
         
     }
 }

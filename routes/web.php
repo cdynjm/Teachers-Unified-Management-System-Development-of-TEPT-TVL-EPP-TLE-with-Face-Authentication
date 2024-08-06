@@ -57,6 +57,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/search/high-school', [AdminController::class, 'searchHighSchool']);
 		Route::post('/search/elementary-school-teachers', [AdminController::class, 'searchElementarySchoolTeachers']);
 		Route::post('/search/high-school-teachers', [AdminController::class, 'searchHighSchoolTeachers']);
+	
+		Route::get('/admin-pro-meds/{id}/{type}/{type2}/{schoolType}', [AdminController::class, 'proMeds'])->name('admin.promeds');
 	});
 
 	Route::group(['middleware' => 'school'], function () {
@@ -65,7 +67,9 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/user/search/elementary-school', [SchoolController::class, 'searchElementarySchool']);
 		Route::post('/user/search/high-school', [SchoolController::class, 'searchHighSchool']);
 		Route::get('/school-teachers', [SchoolController::class, 'teachers'])->name('school-teachers');
+		Route::get('/pro-meds/{id}/{type}/{type2}', [SchoolController::class, 'proMeds'])->name('pro-meds');
 
+		Route::post('/download-promeds', [SchoolController::class, 'downloadProMeds'])->name('print.pro-meds');
 	});
 
 	Route::group(['middleware' => 'teacher'], function () {

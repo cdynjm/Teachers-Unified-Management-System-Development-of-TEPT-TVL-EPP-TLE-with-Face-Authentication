@@ -61,6 +61,21 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
+                                <p class="text-sm">High School Subjects</p>
+                            </div>
+                            <button class="btn btn-sm bg-dark text-white" id="add-high-school-subject">+ Add</button>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-4">
+                            @include('data.admin.high-school-subjects-table')
+                        </div>
+                    </div>
+
+                    <hr class="mx-4 mb-0">
+                    <div class="card-header pb-0">
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
                                 <p class="text-sm">High School TVE/TLE Subjects</p>
                             </div>
                             <button class="btn btn-sm bg-dark text-white" id="add-tle-tve-subject">+ Add</button>
@@ -69,6 +84,21 @@
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-4">
                             @include('data.admin.TLE-TVE-subjects-table')
+                        </div>
+                    </div>
+
+                    <hr class="mx-4 mb-0">
+                    <div class="card-header pb-0">
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
+                                <p class="text-sm">Senior High School Subjects</p>
+                            </div>
+                            <button class="btn btn-sm bg-dark text-white" id="add-senior-high-school-subject">+ Add</button>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-4">
+                            @include('data.admin.senior-high-school-subjects-table')
                         </div>
                     </div>
 

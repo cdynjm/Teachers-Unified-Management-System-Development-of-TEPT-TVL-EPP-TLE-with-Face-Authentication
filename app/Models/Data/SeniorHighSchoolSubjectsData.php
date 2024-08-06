@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Information\Strands;
 use App\Models\Information\HighSchools;
+use App\Models\Information\SeniorHighSchoolSubjects;
 
 class SeniorHighSchoolSubjectsData extends Model
 {
@@ -31,7 +32,9 @@ class SeniorHighSchoolSubjectsData extends Model
     public function HighSchools() {
         return $this->hasOne(HighSchools::class, 'id', 'schoolID');
     }
-
+    public function SeniorHighSchoolSubjects() {
+        return $this->hasOne(SeniorHighSchoolSubjects::class, 'id', 'subjectID');
+    }
     public function Strands() {
         return $this->hasOne(Strands::class, 'id', 'subjectID');
     }

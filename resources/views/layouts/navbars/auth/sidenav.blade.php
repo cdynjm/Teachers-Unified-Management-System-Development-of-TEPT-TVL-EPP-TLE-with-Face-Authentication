@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             @if(Auth::user()->role == 1)
-            <li class="nav-item mb-2"><span class="ms-4 text-xs opacity-7">Mean Percentage Scores</span></li>
+            <li class="nav-item mb-2"><span class="ms-4 text-xs opacity-7">Pages</span></li>
             <li class="nav-item">
                 <a wire:navigate class="nav-link {{ Route::currentRouteName() == 'admin-dashboard' ? 'active' : '' }}" href="{{ route('admin-dashboard') }}">
                     <div

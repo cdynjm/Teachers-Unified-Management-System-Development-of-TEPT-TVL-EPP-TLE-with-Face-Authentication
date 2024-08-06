@@ -33,6 +33,7 @@ use App\Models\Data\ElementarySubjectsData;
 use App\Models\Data\HighSchoolSubjectsData;
 use App\Models\Data\SeniorHighSchoolSubjectsData;
 use App\Models\SchoolYear;
+use App\Models\Data\ProMeds;
 
 class SchoolLogic implements SchoolInterface {
 
@@ -396,5 +397,252 @@ class SchoolLogic implements SchoolInterface {
         }
 
         return Response::HTTP_OK;
+    }
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function getSubjectProMeds($request) {
+        $id = $this->aes->decrypt($request->id);
+
+        if(Auth::user()->schoolType == 1)
+            return ElementarySubjectsData::where('id', $id)->first();
+        if(Auth::user()->schoolType == 2) {
+            if($request->type == 1)
+                return HighSchoolSubjectsData::where('id', $id)->first();
+            if($request->type == 2)
+                return SeniorHighSchoolSubjectsData::where('id', $id)->first();
+        }
+        if(Auth::user()->schoolType == 3)
+            return SeniorHighSchoolSubjectsData::where('id', $id)->first();
+
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function getProMeds($request) {
+        $id = $this->aes->decrypt($request->id);
+        
+        if(Auth::user()->schoolType == 1)
+            return ProMeds::where('elemSubjectID', $id)->get();
+        if(Auth::user()->schoolType == 2) {
+            if($request->type == 1) {
+                if($request->type2 == 0)
+                    return ProMeds::where('hsSubjectID', $id)->get();
+                if($request->type2 == 1)
+                    return ProMeds::where('tleID', $id)->get();
+            }
+            if($request->type == 2) {
+                if($request->type2 == 0)
+                    return ProMeds::where('shsSubjectID', $id)->get();
+                if($request->type2 == 1)
+                    return ProMeds::where('strandID', $id)->get();
+            }
+        }
+        if(Auth::user()->schoolType == 3) {
+            if($request->type2 == 0)
+                return ProMeds::where('shsSubjectID', $id)->get();
+            if($request->type2 == 1)
+                return ProMeds::where('strandID', $id)->get();
+        }
+        
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function createProMeds($request) {
+        $id = $this->aes->decrypt($request->id);
+        
+        if(Auth::user()->schoolType == 1) {
+            
+            ProMeds::create([
+                'elemSubjectID' => $id,
+                'yearLevel' => $request->yearLevel,
+                'quarter' => $request->quarter,
+                'section' => $request->section,
+                'mps' => $request->mps,
+                'students' => $request->students,
+                'out1' => $request->out1,
+                'out2' => $request->out2,
+                'out3' => $request->out3,
+                'very' => $request->very,
+                'sat' => $request->sat,
+                'fair' => $request->fair,
+                'didnot' => $request->didnot,
+                'atrisk' => $request->atrisk,
+                'average' => $request->average
+            ]);
+            
+        }
+
+        if(Auth::user()->schoolType == 2) {
+            if($request->type == 1) {
+                if($request->type2 == 0) {
+                    ProMeds::create([
+                        'hsSubjectID' => $id,
+                        'yearLevel' => $request->yearLevel,
+                        'quarter' => $request->quarter,
+                        'section' => $request->section,
+                        'mps' => $request->mps,
+                        'students' => $request->students,
+                        'out1' => $request->out1,
+                        'out2' => $request->out2,
+                        'out3' => $request->out3,
+                        'very' => $request->very,
+                        'sat' => $request->sat,
+                        'fair' => $request->fair,
+                        'didnot' => $request->didnot,
+                        'atrisk' => $request->atrisk,
+                        'average' => $request->average
+                    ]);
+                }
+                    
+                if($request->type2 == 1) {
+                    ProMeds::create([
+                        'tleID' => $id,
+                        'yearLevel' => $request->yearLevel,
+                        'quarter' => $request->quarter,
+                        'section' => $request->section,
+                        'mps' => $request->mps,
+                        'students' => $request->students,
+                        'out1' => $request->out1,
+                        'out2' => $request->out2,
+                        'out3' => $request->out3,
+                        'very' => $request->very,
+                        'sat' => $request->sat,
+                        'fair' => $request->fair,
+                        'didnot' => $request->didnot,
+                        'atrisk' => $request->atrisk,
+                        'average' => $request->average
+                    ]);
+                }    
+            }
+            if($request->type == 2) {
+                if($request->type2 == 0) {
+                    ProMeds::create([
+                        'shsSubjectID' => $id,
+                        'yearLevel' => $request->yearLevel,
+                        'quarter' => $request->quarter,
+                        'section' => $request->section,
+                        'mps' => $request->mps,
+                        'students' => $request->students,
+                        'out1' => $request->out1,
+                        'out2' => $request->out2,
+                        'out3' => $request->out3,
+                        'very' => $request->very,
+                        'sat' => $request->sat,
+                        'fair' => $request->fair,
+                        'didnot' => $request->didnot,
+                        'atrisk' => $request->atrisk,
+                        'average' => $request->average
+                    ]);
+                }
+                    
+                if($request->type2 == 1) {
+                    ProMeds::create([
+                        'strandID' => $id,
+                        'yearLevel' => $request->yearLevel,
+                        'quarter' => $request->quarter,
+                        'section' => $request->section,
+                        'mps' => $request->mps,
+                        'students' => $request->students,
+                        'out1' => $request->out1,
+                        'out2' => $request->out2,
+                        'out3' => $request->out3,
+                        'very' => $request->very,
+                        'sat' => $request->sat,
+                        'fair' => $request->fair,
+                        'didnot' => $request->didnot,
+                        'atrisk' => $request->atrisk,
+                        'average' => $request->average
+                    ]);
+                }
+            }
+        }
+        
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function updateProMeds($request) {
+        ProMeds::where('id', $this->aes->decrypt($request->promedID))->update([
+            'section' => $request->section,
+            'mps' => $request->mps,
+            'students' => $request->students,
+            'out1' => $request->out1,
+            'out2' => $request->out2,
+            'out3' => $request->out3,
+            'very' => $request->very,
+            'sat' => $request->sat,
+            'fair' => $request->fair,
+            'didnot' => $request->didnot,
+            'atrisk' => $request->atrisk,
+            'average' => $request->average
+        ]);
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function deleteProMeds($request) {
+        ProMeds::where('id', $this->aes->decrypt($request->promedID))->delete();
+    }
+     /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function downloadProMeds($request) {
+        $id = $this->aes->decrypt($request->id);
+        
+        if(Auth::user()->schoolType == 1)
+            return ProMeds::where('elemSubjectID', $id)->where('quarter', $request->quarter)->get();
+        if(Auth::user()->schoolType == 2) {
+            if($request->type == 1) {
+                if($request->type2 == 0)
+                    return ProMeds::where('hsSubjectID', $id)->where('quarter', $request->quarter)->get();
+                if($request->type2 == 1)
+                    return ProMeds::where('tleID', $id)->where('quarter', $request->quarter)->get();
+            }
+            if($request->type == 2) {
+                if($request->type2 == 0)
+                    return ProMeds::where('shsSubjectID', $id)->where('quarter', $request->quarter)->get();
+                if($request->type2 == 1)
+                    return ProMeds::where('strandID', $id)->where('quarter', $request->quarter)->get();
+            }
+        }
+        if(Auth::user()->schoolType == 3) {
+            if($request->type2 == 0)
+                return ProMeds::where('shsSubjectID', $id)->where('quarter', $request->quarter)->get();
+            if($request->type2 == 1)
+                return ProMeds::where('strandID', $id)->where('quarter', $request->quarter)->get();
+        }
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function seniorHigh($request) {
+       
+        
+        if(Auth::user()->schoolType == 2) {
+            if($request->type == 2)
+                return true;
+            else
+                return false;
+        }
+        if(Auth::user()->schoolType == 3)
+            return true;
+        
     }
 }

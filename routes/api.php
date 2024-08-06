@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 		Route::group(['prefix' => 'create'], function () {
             Route::post('/teacher', [SchoolController::class, 'createTeacher']);
+            Route::post('/promeds', [SchoolController::class, 'createProMeds']);
 		});
 		Route::group(['prefix' => 'update'], function () {
             Route::patch('/elementary-subject-mps', [SchoolController::class, 'updateElementarySubjectMPS']);
@@ -70,10 +71,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::patch('/shs-total-students', [SchoolController::class, 'updateSHSTotalStudents']);
             Route::patch('/teacher', [SchoolController::class, 'updateTeacher']);
             Route::patch('/school-account', [SchoolController::class, 'updateSchoolAccount']);
-
+            Route::patch('/promeds', [SchoolController::class, 'updateProMeds']);
         });
 		Route::group(['prefix' => 'delete'], function () {
             Route::delete('/teacher', [SchoolController::class, 'deleteTeacher']);
+            Route::delete('/promeds', [SchoolController::class, 'deleteProMeds']);
 		});
         
 	});

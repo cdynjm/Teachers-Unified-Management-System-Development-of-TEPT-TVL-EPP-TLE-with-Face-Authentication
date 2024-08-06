@@ -245,4 +245,76 @@ class SchoolController extends Controller
         $status = $this->SchoolInterface->updateSchoolAccount($request);
         return response()->json([], $status);        
      }
+     /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function proMeds(Request $request) {
+       $subject = $this->SchoolInterface->getSubjectProMeds($request);
+       $promeds = $this->SchoolInterface->getProMeds($request);
+       $teachers = $this->SchoolInterface->getTeachers();
+       return view('pages.schools.pro-meds', ['teachers' => $teachers, 'subject' => $subject, 'promeds' => $promeds, 'type' => $request->type]);
+     }
+
+      /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function createProMeds(Request $request) {
+        $this->SchoolInterface->createProMeds($request);
+        $promeds = $this->SchoolInterface->getProMeds($request);
+        $aes = $this->aes;
+
+        return response()->json([
+            'Message' => 'Data updated successfully',
+            'ProMeds' => view('data.schools.promeds', compact('promeds', 'aes'))->render()
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function updateProMeds(Request $request) {
+        $this->SchoolInterface->updateProMeds($request);
+        $promeds = $this->SchoolInterface->getProMeds($request);
+        $aes = $this->aes;
+
+        return response()->json([
+            'Message' => 'Data updated successfully',
+            'ProMeds' => view('data.schools.promeds', compact('promeds', 'aes'))->render()
+        ], Response::HTTP_OK);
+    }
+    /*
+    **
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function deleteProMeds(Request $request) {
+        $this->SchoolInterface->deleteProMeds($request);
+        $promeds = $this->SchoolInterface->getProMeds($request);
+        $aes = $this->aes;
+
+        return response()->json([
+            'Message' => 'Data deleted successfully',
+            'ProMeds' => view('data.schools.promeds', compact('promeds', 'aes'))->render()
+        ], Response::HTTP_OK);
+    }
+    /*
+    **
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function downloadProMeds(Request $request) {
+        $subject = $this->SchoolInterface->getSubjectProMeds($request);
+        $promeds = $this->SchoolInterface->downloadProMeds($request);
+        $seniorHigh = $this->SchoolInterface->seniorHigh($request);
+
+        return view('pages.schools.print-promeds', ['teacher' => $request->teacher, 'seniorHigh' => $seniorHigh, 'subject' => $subject, 'promeds' => $promeds, 'type' => $request->type, 'quarter' => $request->quarter]);
+    }
 }
