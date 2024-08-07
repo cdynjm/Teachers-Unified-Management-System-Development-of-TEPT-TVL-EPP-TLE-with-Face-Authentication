@@ -1,0 +1,8 @@
+.search-button {
+    margin-top: 56px;
+}
+@media (max-width: 767px) {
+    .search-button {
+        margin-top: 20px;
+    }
+}

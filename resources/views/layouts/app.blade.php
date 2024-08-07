@@ -53,24 +53,24 @@
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     
-    <link rel='stylesheet' href="{{asset('storage/css/app.css')}}">
+    <link rel='stylesheet' href="{{asset('assets/css/app.css')}}">
 
     @if(Auth::check())
-        <script src="{{asset('storage/js/signout.js')}}" data-navigate-once></script>
+        <script src="{{asset('assets/js/signout.js')}}" data-navigate-once></script>
         @if(Auth::user()->role == 1)
-            <script src="{{asset('storage/js/admin.js')}}" data-navigate-once></script>
-            <script src="{{asset('storage/js/map.js')}}" data-navigate-once></script>
+            <script src="{{asset('assets/js/admin.js')}}" data-navigate-once></script>
+            <script src="{{asset('assets/js/map.js')}}" data-navigate-once></script>
         @endif
         @if(Auth::user()->role == 2)
-            <script src="{{asset('storage/js/school.js')}}" data-navigate-once></script>
+            <script src="{{asset('assets/js/school.js')}}" data-navigate-once></script>
         @endif
         @if(Auth::user()->role == 3)
-            <script src="{{asset('storage/js/teacher.js')}}" data-navigate-once></script>
+            <script src="{{asset('assets/js/teacher.js')}}" data-navigate-once></script>
         @endif
     @else
-        <script defer src="{{asset('storage/js/face-api.min.js')}}"></script>
-        <script defer src="{{asset('storage/js/face-auth.min.js')}}"></script>
-        <script src="{{asset('storage/js/signin.js')}}" data-navigate-once></script>
+        <script defer src="{{asset('assets/js/face-api.min.js')}}"></script>
+        <script defer src="{{asset('assets/js/face-auth.min.js')}}"></script>
+        <script src="{{asset('assets/js/signin.js')}}" data-navigate-once></script>
     @endif
 
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
