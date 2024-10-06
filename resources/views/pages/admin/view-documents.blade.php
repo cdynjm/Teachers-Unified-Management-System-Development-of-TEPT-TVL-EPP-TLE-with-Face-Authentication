@@ -51,7 +51,7 @@
                                     <label for="" class="fw-normal">Select school to display records</label>
                                     <select name="school" class="form-select" required>
                                         <option value="">Select...</option>
-                                        @foreach ($elementarySchools as $sc)
+                                        @foreach ($elementarySchools->sortBy('school') as $sc)
                                             <option value="{{ $aes->encrypt($sc->id) }}" 
                                                 @if(Session::get('elementaryTeacher') == $aes->encrypt($sc->id)) 
                                                     selected 
@@ -87,7 +87,7 @@
                                     <label for="" class="fw-normal">Select school to display records</label>
                                     <select name="school" class="form-select" required>
                                         <option value="">Select...</option>
-                                        @foreach ($highSchools as $sc)
+                                        @foreach ($highSchools->sortBy('school') as $sc)
                                             <option value="{{ $aes->encrypt($sc->id) }}" 
                                                 @if(Session::get('highSchoolTeacher') == $aes->encrypt($sc->id)) 
                                                     selected 
